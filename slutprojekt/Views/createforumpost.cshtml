@@ -1,0 +1,68 @@
+﻿@using WebMatrix.Data
+@{
+    Layout = "~/shared/_Layout.cshtml";
+}
+@{
+    Validation.Add("forumtitle", Validator.Required("You cant leave this field empty"));
+    Validation.Add("forumtext", Validator.Required("You cant leave this field epmty"));
+    Validation.Add("forumtype", Validator.Required("You need to select a forum post type"));
+    <!--small validators to get rid of the majority of problems-->
+}
+@{
+    if (IsPost && Validation.IsValid())
+    {
+        var title = Request.Form["forumtitle"];
+        var text = Request.Form["forumtext"];
+        var type = Request.Form["forumtype"];
+        var db = Database.Open("DBconn");
+        var queryString = "INSERT INTO FORUM (title, posttext, posttype) VALUES ('" + @title + "', '" + text + "', '" + type + "');";
+        <!--inserts the forumpost into the correct table and database-->
+        db.Execute(queryString);
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Montserrat:ital,wght@0,400;1,300&display=swap" rel="stylesheet">
+    <script src="~/Content/JS/js/materialize.min.js"></script>
+    <link href="~/Content/CSS/minifiedstylesheet1.css" rel="stylesheet" />
+    <link href="~/Content/CSS/materialize.min.css" rel="stylesheet" />
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('select');
+            var instances = M.FormSelect.init(elems);
+        });
+    </script>
+</head>
+<body>
+    @if (IsPost && Validation.IsValid())
+    {
+        <!--tells the user that the post has been submitted and sends them to the forum page-->
+        <p class="center">Your post has been submited</p>
+        Response.Redirect("Forum.cshtml");
+    }
+    <div class="container">
+        <form name="createforumpost" method="post" action="">
+            <h3 class="center">create a forum post!</h3>
+            <input class="center" type="text" name="forumtitle" id="message" placeholder="Enter your title" />
+            <textarea name="forumtext" class="col m10 center"></textarea>
+            <select class="center" id="messagetype" name="forumtype">
+                <option value="troubleshooting">troubleshooting</option>
+                <option value="suggestion">Suggestions</option>
+                <option value="discussion">discussion</option>
+            </select>
+            <input class="center" type="submit" />
+        </form>
+    </div>
+</body>
+</html>

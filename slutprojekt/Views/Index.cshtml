@@ -6,7 +6,10 @@
 
 <html>
 <head>
-    <link href="~/Content/CSS/materialize.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Montserrat:ital,wght@0,400;1,300&display=swap" rel="stylesheet">
+    <link href="~/Content/CSS/minifiedstylesheet1.css" rel="stylesheet" />
+    <link href="~/Content/CSS/materialize.min.css" rel="stylesheet" />
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
@@ -16,8 +19,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
-    <div>
+    <div class="container">
+        <div>
+            <h1 class="center-align">Welcome to Ale Merry!</h1>
+        </div>
+        <div class="row">
 
+            <div class="col s6">
+                <h3 class="center-align flow-text"> Beginner friendly</h3>
+                <p class="flow-text">Ale Merry seeks to not only give home brewers a platform but also help beginner home breweres get started.</p>
+            </div>
+            <div class="col s6">
+                <h3  class="center-align flow-text"> Community focused</h3>
+                <p class="flow-text">  Here at Ale Merry we strive to start a thriving community where home brewers of all kinds can share and help their fellow brewers.</p>
+            </div>
+            <div>
+                <h2 class="center-align">An introduction to homebrewing</h2>
+                <video class="col s12 xl12 center responsive-video" controls="controls">
+                    <source src="~/Content/videos/The%20Beginner's%20Guide%20to%20Making%20Home%20Brew.mp4" type="video/mp4" />
+                </video>
+            </div>
     </div>
+        </div>
 </body>
 </html>

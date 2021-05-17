@@ -1,11 +1,46 @@
-﻿@{
+﻿@using WebMatrix.Data
+@{
     Layout = "~/shared/_Layout.cshtml";
+
+    Validation.Add("username", Validator.Required("You cant leave this field empty"));
+    Validation.Add("password", Validator.Required("You cant leave this field empty"));
+    <!--small validators to get rid of the majority of problems-->
+
+
+
+    bool login = false;
+
+    if (IsPost && Validation.IsValid())
+    {
+        <!-- checks username and password combo-->
+        var username = Request.Form["username"];
+        var password = Request.Form["password"];
+        var db = Database.Open("DBconn");
+        var queryString = "SELECT * FROM Users WHERE username=" + "'" + username + "' AND password='" + password + "';";
+        var answer = db.Query(queryString);
+
+        foreach (var Users in answer)
+        {
+            <!--goes through the answers from the query-->
+            if (username == @Users.username && password == Users.password)
+            {
+                login = true;
+            }
+        }
+
+
+
+    }
 }
 
 <!DOCTYPE html>
 
 <html>
 <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Montserrat:ital,wght@0,400;1,300&display=swap" rel="stylesheet">
+    <link href="~/Content/CSS/minifiedstylesheet1.css" rel="stylesheet" />
+    <link href="~/Content/CSS/materialize.min.css" rel="stylesheet" />
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
@@ -13,10 +48,41 @@
 
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+
+    </script>
 </head>
 <body>
-    <div>
 
+    <div class="container">
+        @if (login == true)
+        {
+            <a href=""><h3 class="center">create a forum post</h3></a>
+            <div>
+                @{
+                    var db = Database.Open("DBconn");
+                    var queryString = "SELECT * FROM FORUM";
+                    var result = db.Query(queryString);
+                <!--print the forum posts out-->
+                    foreach (var FORUM in result)
+                    {
+                        <h3 class="center">@FORUM.title</h3>
+                        <p class="center">@FORUM.posttext</p>
+                        <p class="center">category @FORUM.posttype</p>
+                    };
+                }
+            </div>}
+        else
+        {
+            <h1 class="center">You must be logged in to use view this page</h1>
+            <h3 class="center">Log in or <a href="">register here</a></h3>
+            <form name="message" method="post" action="">
+                <input type="text" name="username" id="message" placeholder="Enter your username here" />
+                <input type="password" name="password" id="Email" placeholder="Enter your password here" />
+                <input type="submit" onclick="" />
+
+            </form>
+        }
     </div>
 </body>
 </html>

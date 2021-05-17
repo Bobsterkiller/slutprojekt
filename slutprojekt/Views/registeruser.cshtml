@@ -1,0 +1,90 @@
+﻿@using WebMatrix.Data
+@{
+    Layout = "~/shared/_Layout.cshtml";
+
+    Validation.Add("usernamereg", Validator.Required("You cant leave this field empty"));
+    Validation.Add("passwordreg", Validator.Required("You cant leave this field empty"));
+    Validation.Add("passwordreg2", Validator.Required("You cant leave this field empty"));
+    <!--small validators to get rid of the majority of problems-->
+
+
+    if (IsPost && Validation.IsValid())
+    {
+        <!--kollar om lösenordet är skrivet korrekt-->
+        var username = Request.Form["usernamereg"];
+        var password = Request.Form["passwordreg"];
+        var password2 = Request.Form["passwordreg2"];
+
+
+
+        if (password == password2)
+        {
+            var db = Database.Open("DBconn");
+            var queryString = "INSERT INTO Users (username, password) VALUES ('" + username + "', '" + password + "');";
+            db.Execute(queryString);
+
+            Response.Redirect("Forum.cshtml");
+            <!--sends the user to the forum page to log in-->
+        }
+        else
+        {
+           
+        }
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Montserrat:ital,wght@0,400;1,300&display=swap" rel="stylesheet">
+    <link href="~/Content/CSS/minifiedstylesheet1.css" rel="stylesheet" />
+    <link href="~/Content/CSS/materialize.min.css" rel="stylesheet" />
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+        @if (IsPost && Validation.IsValid()) {
+            //kollar om lösenordet är skrivet korrekt//
+            var username = Request.Form["usernamereg"];
+            var password = Request.Form["passwordreg"];
+            var password2 = Request.Form["passwordreg2"];
+
+
+
+            if (password == password2) {
+                var db = Database.Open("DBconn");
+                var queryString = "INSERT INTO Users (username, password) VALUES ('" + username + "', '" + password + "');";
+                db.Execute(queryString);
+
+                Response.Redirect("Forum.cshtml");
+                //sends the user to the forum page to log //
+            }
+            else {
+             // jag verkar inte kunna använda js här men jag måste kommentera som man gör i html //
+            }
+
+            }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <form name="reg" method="post" action="">
+            <h3>
+                you can register here
+            </h3>
+            <input type="text" name="usernamereg" id="message" placeholder="Enter username here" />
+            <input type="password" name="passwordreg" id="Email" placeholder="enter your password here" />
+            <input type="password" name="passwordreg2" id="Email" placeholder="please enter your password again" />
+            <input type="submit" />
+        </form>
+
+    </div>
+</body>
+</html>

@@ -1,11 +1,26 @@
 ﻿@{
     Layout = "~/shared/_Layout.cshtml";
 }
+@{
+    Validation.Add("messageinput", Validator.Required("You cant leave this field empty"));
+    Validation.Add("emailinput", Validator.Required("You cant leave this field epmty"));
+    <!--small validators to get rid of the majority of problems-->
+
+
+    if (IsPost && Validation.IsValid())
+    {
+    }
+}
+}
 
 <!DOCTYPE html>
 
 <html>
 <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Montserrat:ital,wght@0,400;1,300&display=swap" rel="stylesheet">
+    <link href="~/Content/CSS/minifiedstylesheet1.css" rel="stylesheet" />
+    <link href="~/Content/CSS/materialize.min.css" rel="stylesheet" />
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
@@ -15,8 +30,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
-    <div>
-    
+    @if (IsPost && Validation.IsValid())
+    {
+        <p class="center">Your message has been received</p>
+        //makes the customer think we saved his data atleast a non knowing customer is a happy customer//
+    }
+    <div class="container">
+        <form name="message" method="post" action="">
+            <h3>This is a form that you can contact us through</h3>
+            <input type="text" name="messageinput" id="message" placeholder="Enter your message here" />
+            <input type="email" name="emailinput" id="Email" placeholder="Enter your email here to receive a reply when we have seen your message" />
+            <input type="submit" />
+        </form>
     </div>
 </body>
 </html>
