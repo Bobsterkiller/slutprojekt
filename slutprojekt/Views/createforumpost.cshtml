@@ -44,11 +44,11 @@
         });
     </script>
 </head>
-<body>
+<body class="center">
     @if (IsPost && Validation.IsValid())
     {
         <!--tells the user that the post has been submitted and sends them to the forum page-->
-        <p class="center">Your post has been submited</p>
+        <p>Your post has been submited</p>
         Response.Redirect("Forum.cshtml");
     }
     <div class="container">

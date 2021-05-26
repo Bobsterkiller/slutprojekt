@@ -54,16 +54,17 @@
 </head>
 <body>
 
-    <div class="container">
+    <div class="container center">
         @if (login == true)
         {
-            <a href=""><h3 class="center">create a forum post</h3></a>
+
+            <a href="~/Views/createforumpost.cshtml"><h3 class="center">create a forum post</h3></a>
             <div>
                 @{
                     var db = Database.Open("DBconn");
                     var queryString = "SELECT * FROM FORUM";
                     var result = db.Query(queryString);
-                <!--print the forum posts out-->
+                    <!--print the forum posts out-->
                     foreach (var FORUM in result)
                     {
                         <h3 class="center">@FORUM.title</h3>
@@ -74,14 +75,19 @@
             </div>}
         else
         {
-            <h1 class="center">You must be logged in to use view this page</h1>
-            <h3 class="center">Log in or <a href="">register here</a></h3>
-            <form name="message" method="post" action="">
-                <input type="text" name="username" id="message" placeholder="Enter your username here" />
-                <input type="password" name="password" id="Email" placeholder="Enter your password here" />
-                <input type="submit" onclick="" />
+            <div>
+                <h1>You must be logged in to use view this page</h1>
+                <h3>
+                    Log in or
+                    <a href="~/Views/registeruser.cshtml">Register here</a>
+                </h3>
+                <form name="message" method="post" action="">
+                    <input type="text" name="username" id="message" placeholder="Enter your username here" />
+                    <input type="password" name="password" id="Email" placeholder="Enter your password here" />
+                    <input type="submit" onclick="" />
 
-            </form>
+                </form>
+            </div>
         }
     </div>
 </body>
